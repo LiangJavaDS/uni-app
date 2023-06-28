@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<fui-loading v-if="loading" text="加载中。。。" :srcCol="commonBase64.loading"></fui-loading>
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
 			<text class="title">{{title}}</text>
@@ -8,14 +9,16 @@
 </template>
 
 <script>
+import { commonBase64,addCampusBase64} from "@/base64/index.js"
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				loading:true
 			}
 		},
 		onLoad() {
-
+			// this.loading = false
 		},
 		methods: {
 
