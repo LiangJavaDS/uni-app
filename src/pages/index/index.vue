@@ -15,6 +15,12 @@
 							<image v-if="currentCode === item.code" src="@/static/select.png"></image>
 						</view>
 					</view>
+					<button size="mini" @click="login">
+						<view class="buttonStyle">
+							<image src="@/static/weChat.png"/>
+							<view class="btnText">微信登录</view>
+						</view>
+					</button>
 				</view>
 			</view>
 		</uni-transition>
@@ -23,8 +29,9 @@
 </template>
 
 <script>
-import { commonBase64,addCampusBase64} from "@/base64/index.js"
+import { commonBase64,addCampusBase64} from "@/base64/index"
 import {uniRequest} from"@/utils/tool.js"
+import { getFileName } from '@/utils/tool'
 	export default {
 		data() {
 			return {
@@ -42,10 +49,40 @@ import {uniRequest} from"@/utils/tool.js"
 			this.campuses = myCampuses.data
 			this.loading = false
 		},
+		async onShow(){},
 		methods: {
 			login(){
 				if(this.currentCode){
 					// do anything
+					uni.getUserProfile({
+						desc:"获取信息",
+						lang:"zh_CN",
+						success:async(res)=>{
+							console.log('7878',res)
+							this.showMark = null;
+							this.loading = true;
+							const resData = await uniRequest("txCos/saveAvatar","POST",{
+								folder:"userAvatar/",
+								filePath:res.userInfo.avatarUrl,
+								fileName:getFileName()
+							})
+							const cloudPath = resData.cloudPath;
+							this.userInfo = {
+								nickName:res.userInfo.nickName,
+								openId:this.openId,
+								uniId:this.uniId,
+								gender:"1",
+								avatarUrl:cloudPath,
+								campus:this.currentCode
+							}
+							this.loading = false;
+							this.loginType = "getPhone";
+							this.showMark = "getPhone"
+						},
+						fail:(error)=>{
+							console.log("debug",error)
+						}
+					})
 				}else {
 					let options = {
 						title: "请先选择runner社区~",
@@ -243,10 +280,27 @@ import {uniRequest} from"@/utils/tool.js"
 	}
 
 	.home {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(60%, -50%) !important;
-    -webkit-transform: translate(60%, -50%) !important;
-  }
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(60%, -50%) !important;
+		-webkit-transform: translate(60%, -50%) !important;
+  	}
+
+  .buttonStyle {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		image {
+			width: 48rpx;
+			height: 48rpx;
+			margin-right: 10rpx;
+			animation: wxChatImg 3s linear infinite;
+		}
+
+		.btnText {
+			font-size: 33rpx;
+		}
+	}
 </style>
