@@ -1,9 +1,9 @@
-const host = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8087" : "xxx"
+export const address = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8087" : "xxx"
 
 export function uniRequest(url, method, data) {
     return new Promise((resolve, reject) => {
         uni.request({
-            url: host + '/wx/' + url,
+            url: address + '/wx/' + url,
             method: method ?? 'GET',
             data: data ?? {},
             success: (res) => {

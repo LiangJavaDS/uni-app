@@ -22,6 +22,16 @@
 						</view>
 					</button>
 				</view>
+				<view class="loginContent" v-if="loginType=='getPhone'">
+					<view class="title1">绑定手机号</view>
+					<view class="title2">请先绑定手机号再进行此操作</view>
+					<button size="mini" open-type="getPhoneNumber" @getphonenumber="getPhonenumberGo">
+						<view class="buttonStyle">
+							<image src="@/static/weChat.png" />
+							<view class="btnText">微信用户一键绑定</view>
+						</view>
+					</button>
+				</view>
 			</view>
 		</uni-transition>
 		</view>
@@ -31,8 +41,43 @@
 <script>
 import { commonBase64,addCampusBase64} from "@/base64/index"
 import {uniRequest} from"@/utils/tool.js"
+import {getOpenid} from "@/utils/login.js"
 import { getFileName } from '@/utils/tool'
 	export default {
+		async onLoad() {
+			let myCampuses = await uniRequest("campus/search", "POST");
+			this.campuses = myCampuses.data
+			this.loading = false
+		},
+		async onShow() {
+			//获取是否新用户
+			let loginData = await getOpenid();
+			this.openid = loginData.openid;
+			this.unionid = loginData.unionid;
+			let userData = await uniRequest("userInfo/search", "POST", {
+				unionid: this.unionid,
+			});
+			if (userData.data) {
+				if (userData.data.openid) {
+					//如果是老用户 返回用户信息，并存到本地
+					uni.setStorageSync("isFirst", false);
+					uni.setStorageSync("userInfo", userData.data);
+					uni.setStorageSync("isRefresh", false);
+					this.loading = false;
+					uni.switchTab({
+						url: "/pages/list/index",
+					});
+				} else {
+					this.mark = "edit";
+					this.loading = false;
+					this.isShowLogin = true;
+				}
+			} else {
+				this.mark = "add";
+				this.loading = false;
+				this.isShowLogin = true;
+			}
+		},
 		data() {
 			return {
 				title: 'Hello',
@@ -44,12 +89,6 @@ import { getFileName } from '@/utils/tool'
 				campuses:[]
 			}
 		},
-		async onLoad() {
-			let myCampuses = await uniRequest("campus/search", "POST");
-			this.campuses = myCampuses.data
-			this.loading = false
-		},
-		async onShow(){},
 		methods: {
 			login(){
 				if(this.currentCode){
@@ -91,6 +130,42 @@ import { getFileName } from '@/utils/tool'
 					};
 					this.$refs.toast.show(options);
 				}
+			},
+			// 个人用户无法获取用户手机号
+			async getPhonenumberGo(e) {
+				console.log("7878e", e)
+				// if (e.detail.code) {
+				this.showMark = null;
+				this.loading = true
+				const phone  = '17865423035'
+				// let phone = (
+				// 	await uniRequest("wxApi/getPhoneNumber", "POST", {
+				// 		code: '17865423035',
+				// 		openid: this.openid,
+				// 	})
+				// ).data.phone_info.phoneNumber;
+				let info = {
+					...this.userInfo,
+					phoneNumber: phone,
+					type: "1",
+				};
+				if (this.mark === "add") {
+					await uniRequest("userInfo/add", "POST", info);
+				} else {
+					await uniRequest("userInfo/update", "POST", {
+						searchParams: {
+							unionid: this.unionid
+						},
+						updateParams: info,
+					});
+				}
+				uni.setStorageSync("isFirst", true);
+				uni.setStorageSync("userInfo", info);
+				this.loading = false
+				uni.switchTab({
+					url: "/pages/self/index",
+				});
+				// }
 			},
 			selectCampus(code){
 				this.currentCode =this.currentCode=== code ? null:code

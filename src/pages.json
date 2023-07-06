@@ -5,6 +5,24 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/list/index",
+			"style": {
+				"navigationBarTitleText": "RunnersPub"
+			}
+		},
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/self/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"easycom": {
@@ -14,6 +32,32 @@
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
 			"tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
 		}
+	},
+	"tabBar": {
+		"color": "#B3ACAC",
+		"selectedColor": "#1A1818",
+		"borderStyle": "white",
+		"backgroundColor": "#FFFFFF",
+		"list": [
+			{
+				"pagePath": "pages/list/index",
+				"iconPath": "static/list.png",
+				"selectedIconPath": "static/listSelect.png",
+				"text": "runners"
+			},
+			{
+				"pagePath": "pages/order/index",
+				"iconPath": "static/order.png",
+				"selectedIconPath": "static/orderSelect.png",
+				"text": "订单"
+			},
+			{
+				"pagePath": "pages/self/index",
+				"iconPath": "static/self.png",
+				"selectedIconPath": "static/selfSelect.png",
+				"text": "我的"
+			}
+		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
