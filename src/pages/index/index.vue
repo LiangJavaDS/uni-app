@@ -55,8 +55,17 @@ import { getFileName } from '@/utils/tool'
 			this.openid = loginData.openid;
 			this.unionid = loginData.unionid;
 			let userData = await uniRequest("userInfo/search", "POST", {
-				unionid: this.unionid,
+				unionid: this.openId,
 			});
+			//如果是老用户 返回用户信息，并存到本地
+			uni.setStorageSync("isFirst", false);
+			uni.setStorageSync("userInfo", userData.data);
+			uni.setStorageSync("isRefresh", false);
+			this.loading = false;
+			uni.switchTab({
+				url: "/pages/self/index",
+			});
+			return
 			if (userData.data) {
 				if (userData.data.openid) {
 					//如果是老用户 返回用户信息，并存到本地

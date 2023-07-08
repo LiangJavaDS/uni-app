@@ -23,6 +23,18 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/self/editInfo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/result/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"easycom": {
