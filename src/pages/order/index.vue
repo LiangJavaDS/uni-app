@@ -4,23 +4,27 @@
       <Tourist />
     </view>
     <view class="lhy" v-if="userInfo && userInfo.type === '1'">
-      <SegmentedControl :texts="texts" @tabChange="tabChange" :currentTab="currentTab">
-        <view class="typeChange" v-if="currentTab === 1 || currentTab === 3">
-          <view class="box" @click="changeType">
-            <image :class="isChanging ? 'typechangeing' : 'loadingimg'" src="@/static/loadingSearch.png" />
-            <view class="typetext">{{ typeText[typeIndex] }}</view>
-          </view>
+      <SegmentedControl :texts="texts" @tabChange="tabChange" :currentTab="currentTab" />
+      <view class="typeChange" v-if="currentTab === 1 || currentTab === 3">
+        <view class="box" @click="changeType">
+          <image :class="isChanging ? 'typechangeing' : 'loadingimg'" src="@/static/loadingSearch.png" />
+          <view class="typetext">{{ typeText[typeIndex] }}</view>
         </view>
-      </SegmentedControl>
+      </view>
+      <view>
+        <NewOrder v-show="currentTab === 0" :userInfo="userInfo" />
+        <OrderIng v-show="currentTab === 1" :userInfo="userInfo" :orderData="orderDataIng" />
+        <OrderSelf v-show="currentTab === 2" :userInfo="userInfo" :orderData="orderDataSelf" @getOrderData="getOrderData" />
+        <OrderEd v-show="currentTab === 3" :userInfo="userInfo" :orderData="orderDataEd" />
+      </view>
     </view>
-    订单页11
   </view>
 </template>
 
 <script>
 
 import { uniRequest } from "@/utils/tool.js";
-// import NewOrder from "./newOrder.vue";
+import NewOrder from "./newOrder.vue";
 import OrderSelf from "./orderSelf.vue";
 import OrderIng from "./orderIng.vue";
 import OrderEd from "./orderEd.vue";
@@ -30,7 +34,7 @@ import SegmentedControl from "@/components/segmentedControl.vue";
 
 export default {
   components: {
-    // NewOrder,
+    NewOrder,
     OrderIng,
     OrderEd,
     Tourist,
@@ -173,5 +177,51 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+}
+
+.typechange {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .box {
+    display: flex;
+    align-items: center;
+    height: 5vh;
+
+    .typetext {
+      color: #a09d9d;
+      margin: 0 30rpx 0 20rpx;
+    }
+
+    .loadingimg {
+      width: 40rpx;
+      height: 40rpx;
+    }
+
+    .typechangeing {
+      width: 40rpx;
+      height: 40rpx;
+      animation: loading 1s linear infinite;
+    }
+  }
+}
+
+@-webkit-keyframes loading {
+  0% {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 </style>
