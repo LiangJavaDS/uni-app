@@ -52,6 +52,8 @@ export default {
         return {
             userInfo: null,
             allHeight: null,
+            texts: ["关注", "赞赏", "模版", "地址"],
+            currentTab: 0
         }
     },
     onLoad() {
@@ -65,6 +67,9 @@ export default {
     methods: {
         editInfo() {
             jumpTo("/pages/self/editInfo");
+        },
+        tabChange(value) {
+            this.currentTab = value;
         },
     }
 };
@@ -175,5 +180,15 @@ export default {
             }
         }
     }
+}
+
+.content {
+    position: absolute;
+    bottom: 0;
+    height: 55%;
+    width: 100%;
+    border-top-left-radius: 60rpx;
+    border-top-right-radius: 60rpx;
+    background-color: #ffffff;
 }
 </style>
