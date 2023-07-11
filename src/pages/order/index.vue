@@ -7,14 +7,15 @@
       <SegmentedControl :texts="texts" @tabChange="tabChange" :currentTab="currentTab" />
       <view class="typeChange" v-if="currentTab === 1 || currentTab === 3">
         <view class="box" @click="changeType">
-          <image :class="isChanging ? 'typechangeing' : 'loadingimg'" src="@/static/loadingSearch.png" />
+          <!-- <image :class="isChanging ? 'typechangeing' : 'loadingimg'" src="@/static/loadingSearch.png" /> -->
           <view class="typetext">{{ typeText[typeIndex] }}</view>
         </view>
       </view>
       <view>
         <NewOrder v-show="currentTab === 0" :userInfo="userInfo" />
         <OrderIng v-show="currentTab === 1" :userInfo="userInfo" :orderData="orderDataIng" />
-        <OrderSelf v-show="currentTab === 2" :userInfo="userInfo" :orderData="orderDataSelf" @getOrderData="getOrderData" />
+        <OrderSelf v-show="currentTab === 2" :userInfo="userInfo" :orderData="orderDataSelf"
+          @getOrderData="getOrderData" />
         <OrderEd v-show="currentTab === 3" :userInfo="userInfo" :orderData="orderDataEd" />
       </view>
     </view>
@@ -56,9 +57,6 @@ export default {
       typeText: ["全部", "我发出的", "我接受的"],
       isChanging: false
     }
-  },
-  onLoad() {
-
   },
   onShow() {
     this.userInfo = uni.getStorageSync("userInfo")

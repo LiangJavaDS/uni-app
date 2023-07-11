@@ -16,6 +16,14 @@ export function uniRequest(url, method, data) {
     })
 }
 
+export function getRandomOrderId() {
+    return (Math.random() * 10000000).toString(16).substr(0, 4) + (new Date()).getTime()
+}
+
+export function getRandomId() {
+    return (Math.random() * 10000000).toString(16).substr(0, 4) + '-' + (new Date()).getTime() + '-' + (Math.random() * 1000000000).toString().substr(0, 8)
+}
+
 export function getFileName(suffix) {
     if (suffix) {
         return (Math.random() * 10000000).toString(16).substr(0, 4) + '-' + (new Date()).getTime() + '-' + (Math.random() * 1000000000).toString().substr(0, 8) + '.' + suffix
@@ -23,7 +31,6 @@ export function getFileName(suffix) {
         return (Math.random() * 10000000).toString(16).substr(0, 4) + '-' + (new Date()).getTime() + '-' + (Math.random() * 1000000000).toString().substr(0, 8) + '.png'
     }
 }
-
 /** 初始化环境信息 */
 export function setUpMenuInfo() {
     uni.getSystemInfo({

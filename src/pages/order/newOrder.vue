@@ -214,7 +214,7 @@ export default {
         unionid: this.userInfo.unionid,
       });
       uni.setStorageSync("userInfo", userData.data);
-      if (userData.data.serviceOpenid) {
+      if (userData.data) {
         for (const item of this.tips) {
           if (!this.form[item.value]) {
             let options = {
@@ -227,11 +227,11 @@ export default {
           }
         }
         let orderid = this.userInfo.campus + getRandomOrderId();
-        await wxPay({
-          price: Number(this.form.price).toFixed(2),
-          openid: this.userInfo.openid,
-          orderid,
-        });
+        // await wxPay({
+        //   price: Number(this.form.price).toFixed(2),
+        //   openid: this.userInfo.openid,
+        //   orderid,
+        // });
         let cloudPhotoPath = null;
         if (this.form.localphotos) {
           cloudPhotoPath = await uploadFile({
@@ -336,6 +336,7 @@ export default {
   display: flex;
   justify-content: center;
   margin: 50rpx 0;
-}</style>
+}
+</style>
 
 
