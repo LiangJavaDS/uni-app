@@ -3,17 +3,20 @@
     <view class="loading" v-if="loading">
       <image :src="base64Img.loadingChatList" />
     </view>
-    <uni-transition :mode-class="['fade','zoom-in']" :show="!loading">
+    <uni-transition :mode-class="['fade', 'zoom-in']" :show="!loading">
       <view class="chatBox">
         <scroll-view scroll-y :scroll-into-view="showid" class="chatList">
-          <view :class="selectItemId===item.id?'chatitem selectitem':'chatitem'" v-for="(item,index) in data" :key="index" :id="'showid'+index" @click="selectItem(item)">
-            <view v-if="item.toOpenid" class="name">{{item.fromName}}<text style="color: #747474">回复</text>{{item.toName}}:</view>
-            <view class="name" v-else>{{item.fromName}}:</view>
-            <view class="content">{{item.content}}</view>
+          <view :class="selectItemId === item.id ? 'chatitem selectitem' : 'chatitem'" v-for="(item, index) in data" :key="index"
+            :id="'showid' + index" @click="selectItem(item)">
+            <view v-if="item.toOpenid" class="name">{{ item.fromName }}<text
+                style="color: #747474">回复</text>{{ item.toName }}:</view>
+            <view class="name" v-else>{{ item.fromName }}:</view>
+            <view class="content">{{ item.content }}</view>
           </view>
         </scroll-view>
         <view class="chatinput">
-          <input :placeholder="inputPlaceholder" v-model="inputValue" confirm-type="send" :cursor-spacing="20" @confirm="sendChat" :focus="inputFocus" @keyboardheightchange="keyboardheightchange" />
+          <input :placeholder="inputPlaceholder" v-model="inputValue" confirm-type="send" :cursor-spacing="20"
+            @confirm="sendChat" :focus="inputFocus" @keyboardheightchange="keyboardheightchange" />
         </view>
       </view>
     </uni-transition>
@@ -150,14 +153,17 @@ export default {
 .container {
   padding: 20rpx 0;
 }
+
 .loading {
   text-align: center;
+
   image {
     width: 30rpx;
     height: 30rpx;
     animation: loading 1s linear infinite;
   }
 }
+
 @keyframes loading {
   0% {
     -webkit-transform: rotate(0);
@@ -166,6 +172,7 @@ export default {
     -o-transform: rotate(0);
     transform: rotate(0);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -174,29 +181,35 @@ export default {
     transform: rotate(360deg);
   }
 }
+
 .selectitem {
   background-color: #f8f8f8;
 }
+
 .chatBox {
   .chatList {
     max-height: 500rpx;
     color: #a3a2a2;
     overflow: auto;
     margin-bottom: 25rpx;
+
     .chatitem {
       margin: 15rpx 0;
       display: flex;
+
       .name {
         white-space: nowrap;
         color: #6f83bf;
         font-weight: bold;
         margin-right: 20rpx;
       }
+
       .content {
         // max-width: 75%;
       }
     }
   }
+
   .chatinput {
     height: 80rpx;
     border-radius: 30rpx;
@@ -204,9 +217,9 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 30rpx;
+
     input {
       width: 100%;
     }
   }
-}
-</style>
+}</style>

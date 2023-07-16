@@ -182,6 +182,7 @@ export default {
             }, 300);
         },
         comment(id) {
+            console.log('8989id', id)
             this.showChatBoxId = id;
         },
         async support(item) {

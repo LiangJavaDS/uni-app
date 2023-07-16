@@ -3,13 +3,33 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/index/addCampus",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/list/index",
 			"style": {
 				"navigationBarTitleText": "RunnersPub"
+			}
+		},
+		{
+			"path": "pages/list/moreInfo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/chatRoom/index",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true
 			}
 		},
 		{
@@ -32,6 +52,18 @@
 		},
 		{
 			"path": "pages/result/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/chooseCampus/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/servicePages/rule",
 			"style": {
 				"navigationStyle": "custom"
 			}
